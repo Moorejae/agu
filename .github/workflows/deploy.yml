@@ -21,22 +21,18 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: violet-venus/package.json
+          cache-dependency-path: package.json
 
       - name: Install Architecture Dependencies
-        run: |
-          cd violet-venus
-          npm ci || npm install
+        run: npm ci || npm install
 
       - name: Build Production Artifacts
-        run: |
-          cd violet-venus
-          npm run build
+        run: npm run build
 
       - name: Upload Static Assets
         uses: actions/upload-pages-artifact@v3
         with:
-          path: violet-venus/dist
+          path: dist
 
   deploy:
     needs: build
@@ -48,5 +44,3 @@ jobs:
       - name: Deploy to GitHub Pages Live Host
         id: deployment
         uses: actions/deploy-pages@v4
-      - name: Custom Domain Mapping
-        run: echo "yourdomain.com" > violet-venus/dist/CNAME
